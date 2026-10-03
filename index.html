@@ -5,7 +5,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 	<title>PowerPool 2026 · Ürün Yönetimi</title>
-	<link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="./css/style.css">
 </head>
 
 <body>
@@ -152,8 +152,8 @@
 
 		<footer>PowerPool Ürün Yönetimi · Durum kayıtları Google Sheets'te saklanır.</footer>
 	</main>
-	<script src="data.js"></script>
-	<script src="app.js"></script>
+	<script src="./js/data.js"></script>
+	<script src="./js/app.js"></script>
 	<script>
 		(() => { const key = 'powerpool-theme', root = document.documentElement, btn = document.getElementById('themeToggle'); function apply(t) { root.dataset.theme = t; btn.textContent = t === 'dark' ? '☀' : '☼' } apply(localStorage.getItem(key) || 'light'); btn.addEventListener('click', () => { const n = root.dataset.theme === 'dark' ? 'light' : 'dark'; localStorage.setItem(key, n); apply(n) }); const top = document.getElementById('searchTop'), main = document.getElementById('search'); top.addEventListener('input', () => { main.value = top.value; main.dispatchEvent(new Event('input', { bubbles: true })) }); main.addEventListener('input', () => { if (top.value !== main.value) top.value = main.value }) })();
 	</script>
