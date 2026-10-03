@@ -205,7 +205,7 @@ body {
 }
 .metrics-card {
   display: grid;
-  grid-template-columns: repeat(3, 1fr) 1fr;
+  grid-template-columns: repeat(4, 1fr) 1fr;
   align-items: center;
   padding: 17px 18px;
   gap: 8px;
@@ -1542,8 +1542,8 @@ html[data-theme="dark"] {
 .cat-btn {
   padding: 7px 8px;
   border-radius: 6px;
-  font-size: 9px;
-  margin-bottom: 1px;
+  font-size: 12px;
+  margin-bottom: 3px;
 }
 .cat-btn b {
   font-size: 8px;
@@ -1636,7 +1636,7 @@ td {
   font-size: 5px;
 }
 .product-main strong {
-  font-size: 9px;
+  font-size: 14px;
 }
 .product-main small {
   font-size: 7px;
@@ -1644,6 +1644,7 @@ td {
 .market {
   width: 45px;
 }
+
 .market-btn {
   width: 24px;
   height: 24px;
