@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>PowerPool 2026 · Ürün Yönetimi</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main class="app">
+  <header class="hero">
+    <div class="brand-wrap">
+      <div class="brand-mark">◆</div>
+      <div class="brand-copy">
+        <span class="eyebrow">POWERPOOL · 2026 KATALOG</span>
+        <h1>Ürün Yönetimi</h1>
+        <p>Tüm satış kanallarındaki ürün durumlarını yönetin</p>
+      </div>
+    </div>
+    <div class="hero-search"><span>⌕</span><input id="searchTop" type="search" placeholder="Ürün, kod veya kategori ara..."></div>
+    <div class="hero-actions">
+      <span id="apiMini" class="api-mini"><i></i> Google Sheets bağlı</span>
+      <button id="exportCsv" class="btn secondary">⇩ CSV Dışa Aktar</button>
+      <button id="themeToggle" class="icon-btn" title="Tema">☼</button>
+      <button id="restoreAll" class="ghost-btn">Silinenler</button>
+    </div>
+  </header>
+
+  <section class="overview-grid">
+    <div class="overview-card metrics-card">
+      <div class="metric"><span class="metric-icon blue">□</span><div><strong id="totalCount">0</strong><small>Toplam Ürün</small></div></div>
+      <div class="metric"><span class="metric-icon green">✓</span><div><strong id="completeCount">0</strong><small>Tamamlanan</small></div></div>
+      <div class="metric"><span class="metric-icon orange">◷</span><div><strong id="uncheckedCount">0</strong><small>Bekleyen</small></div></div>
+      <div class="metric-progress"><div class="ring"><span id="overallProgress">0%</span></div><small>Genel İlerleme</small></div>
+    </div>
+
+    <div class="overview-card channel-card">
+      <div class="card-title"><strong>KANAL DURUMU</strong><span>5 kanal</span></div>
+      <div id="channelProgress"></div>
+    </div>
+
+div>
+  </section>
+
+  <div class="workspace">
+    <aside class="sidebar">
+      <div class="side-head"><span>KATEGORİLER</span><b id="cat-all">0</b></div>
+      <button class="cat-btn active" data-category="TÜM KATEGORİLER"><span>▦ &nbsp; Tümü</span><b id="cat-all-side">0</b></button>
+      <div id="categoryList">
+        <button class="cat-btn" data-category="Dezenfeksiyon Sistemleri"><span>Dezenfeksiyon Sistemleri</span><b>0</b></button>
+        <button class="cat-btn" data-category="Elektrikli Ekipmanlar"><span>Elektrikli Ekipmanlar</span><b>0</b></button>
+        <button class="cat-btn" data-category="Havuz Filtreleri"><span>Havuz Filtreleri</span><b>0</b></button>
+        <button class="cat-btn" data-category="Havuz İçi Ekipmanları"><span>Havuz İçi Ekipmanları</span><b>0</b></button>
+        <button class="cat-btn" data-category="Havuz Kenar Ekipmanları"><span>Havuz Kenar Ekipmanları</span><b>0</b></button>
+        <button class="cat-btn" data-category="Havuz Kimyasalları"><span>Havuz Kimyasalları</span><b>0</b></button>
+        <button class="cat-btn" data-category="Havuz Pompaları"><span>Havuz Pompaları</span><b>0</b></button>
+        <button class="cat-btn" data-category="Havuz Robotları"><span>Havuz Robotları</span><b>0</b></button>
+        <button class="cat-btn" data-category="Paslanmaz Ürünler"><span>Paslanmaz Ürünler</span><b>0</b></button>
+        <button class="cat-btn" data-category="PVC Vana - Fittings"><span>PVC Vana - Fittings</span><b>0</b></button>
+        <button class="cat-btn" data-category="Temizlik Ekipmanları"><span>Temizlik Ekipmanları</span><b>0</b></button>
+        <button class="cat-btn" data-category="Test Aletleri"><span>Test Aletleri</span><b>0</b></button>
+      </div>
+      <div class="side-bottom"><button id="restoreSide" class="side-action">♻ <span>Silinen Ürünler</span><b id="deletedCount">0</b></button></div>
+    </aside>
+
+    <section class="content">
+      <section class="filters-panel">
+        <button id="mobileFilterToggle" class="mobile-filter-toggle" type="button">⚙ Filtreler <span>⌄</span></button>
+        <section class="filters">
+          <div class="field search-field"><label>Ürün Ara</label><input id="search" type="search" placeholder="Ürün adı, kod, kategori..." autocomplete="off"></div>
+          <div class="field"><label>Alt Kategori</label><select id="subCategory"></select></div>
+          <div class="field"><label>Durum</label><select id="statusFilter"><option value="ALL">Tümü</option><option value="COMPLETE">Tamamlananlar</option><option value="MISSING">Eksik Olanlar</option><option value="UNCHECKED">Kontrol Edilmemişler</option><option value="NONE">Hiçbir Sitede Yok</option></select></div>
+          <div class="field"><label>Eksik Kanal</label><select id="missingFilter"><option value="ALL">Tümü</option><option value="trendyol">Trendyol</option><option value="hepsiburada">Hepsiburada</option><option value="n11">n11</option><option value="epool">e-Pool Market</option><option value="havuz">Havuz Toptancısı</option></select></div>
+        </section>
+      </section>
+
+      <section class="filter-chips">
+        <button class="chip active" data-quick="all">Tümü</button><button class="chip" data-quick="missing">Eksikler</button><button class="chip" data-quick="unchecked">Kontrol Yok</button><button class="chip" data-quick="complete">Tamamlanan</button><button class="chip" data-quick="single">Tek Kanal Eksik</button>
+      </section>
+
+      <section class="table-card">
+        <div class="table-head">
+          <div><h2>Ürünler</h2><span id="resultText"></span></div>
+          <div class="table-tools"><span class="legend"><i class="q">?</i> Kontrol yok <i class="yes">✓</i> Var <i class="no">×</i> Yok</span><button id="clearRecent" class="text-btn">Son değişiklikler</button></div>
+        </div>
+        <div class="recent-strip" id="recentChanges"><span>Henüz değişiklik yok.</span></div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th class="product-col">ÜRÜN</th><th>KOD</th><th class="market">TY</th><th class="market">HB</th><th class="market">N11</th><th class="market">EP</th><th class="market">HT</th><th class="status">DURUM</th><th class="center">⋮</th></tr></thead>
+            <tbody id="productBody"></tbody>
+          </table>
+        </div>
+        <div id="emptyState" class="empty hidden"><div class="empty-icon">⌕</div><h3>Ürün bulunamadı</h3><p>Seçtiğiniz filtrelere uygun aktif ürün yok.</p></div>
+      </section>
+    </section>
+  </div>
+
+  <button id="mobileScrollBtn" class="mobile-scroll-btn" type="button" aria-label="Ürün listesinde gezin">↓ Listenin Sonuna</button>
+
+  <div id="trashModal" class="modal hidden" aria-hidden="true"><div class="modal-card"><button class="modal-close" data-close="trashModal">×</button><div class="modal-eyebrow">♻ GERİ DÖNÜŞÜM KUTUSU</div><h2>Silinen ürünler</h2><p id="trashCountText">0 ürün</p><div id="trashList" class="trash-list"></div><div class="modal-footer"><button id="restoreAllInside" class="btn primary">↶ Tümünü Geri Al</button></div></div></div>
+
+  <footer>PowerPool Ürün Yönetimi · Durum kayıtları Google Sheets'te saklanır.</footer>
+</main>
+<script src="data.js"></script><script src="app.js"></script>
+<script>
+(()=>{const key='powerpool-theme',root=document.documentElement,btn=document.getElementById('themeToggle');function apply(t){root.dataset.theme=t;btn.textContent=t==='dark'?'☀':'☼'}apply(localStorage.getItem(key)||'light');btn.addEventListener('click',()=>{const n=root.dataset.theme==='dark'?'light':'dark';localStorage.setItem(key,n);apply(n)});const top=document.getElementById('searchTop'),main=document.getElementById('search');top.addEventListener('input',()=>{main.value=top.value;main.dispatchEvent(new Event('input',{bubbles:true}))});main.addEventListener('input',()=>{if(top.value!==main.value)top.value=main.value})})();
+</script>
+</body>
+</html>
